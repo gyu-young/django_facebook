@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>자세히 보기 - 나만의 FACEBOOK</title>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+            background-color: #d7d8dd;
+        }
+
+        .nav {
+            position: fixed;
+            background-color: #415ca4;
+            border-bottom: 1px solid #304075;
+            margin: 0;
+            padding: 0;
+            height: 45px;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            position: absolute;
+            left: 0;
+            width: 50px;
+            height: 44px;
+            padding: 9px 0 0 0;
+            text-align: center;
+        }
+
+        .nav-content {
+            position: absolute;
+            left: 50px;
+            right: 50px;
+            height: 44px;
+            padding-top: 10px;
+        }
+
+        .nav-right {
+            position: absolute;
+            right: 0;
+            width: 50px;
+            height: 44px;
+            padding: 9px 0 0 0;
+            text-align: center;
+        }
+
+        .content {
+            position: absolute;
+            top: 45px;
+            padding: 0;
+            width: 100%;
+            padding-bottom: 50px;
+            z-index: 100;
+        }
+
+        .tabbar {
+            position: fixed;
+            background-color: #fff;
+            border-top: 1px solid #ccc;
+            bottom: 0px;
+            width: 100%;
+            height: 50px;
+            padding: 0;
+            text-align: center;
+            z-index: 999;
+        }
+
+        .tab1 {
+            position: absolute;
+            text-align: center;
+            width: 25%;
+            top: 14px;
+        }
+
+        .tab2 {
+            position: absolute;
+            text-align: center;
+            width: 25%;
+            left: 25%;
+            top: 14px;
+        }
+
+        .tab3 {
+            position: absolute;
+            text-align: center;
+            width: 25%;
+            left: 50%;
+            top: 14px;
+        }
+
+        .tab4 {
+            position: absolute;
+            text-align: center;
+            width: 25%;
+            left: 75%;
+            top: 14px;
+        }
+
+        .search-input-text {
+            border-radius: 4px;
+            background-color: #2e3f6e;
+            border: 2px solid #293866;
+            color: #fff;
+            padding: 4px 8px;
+            outline: none;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .search-input-text::placeholder {
+            color: #bbb;
+        }
+
+        .post {
+            background-color: #fff;
+            border-top: 1px solid #c4c5ca;
+            border-bottom: 1px solid #c4c5ca;
+            margin: 6px 0 0 0;
+            padding: 13px;
+            padding-bottom: 11px;
+        }
+
+        .author {
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .date {
+            color: #999;
+        }
+
+        h3 {
+            color: #0a0a0a;
+            font-size: 18px;
+            margin: 5px 0;
+        }
+
+        .info {
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+            font-size: 14px;
+        }
+
+        .item {
+            color: #878b97;
+        }
+
+        a {
+            text-decoration: none;
+            color: #5983e4;
+        }
+
+        div {
+            box-sizing: border-box;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="nav">
+        <div class="nav-left">
+            <a href="/article/new">
+                <i class="fas fa-pen-square" style="color:#fcfefd;font-size:26px;"></i>
+            </a>
+        </div>
+        <div class="nav-content">
+            <input name="query" class="search-input-text" type="text" placeholder="Search" />
+        </div>
+        <div class="nav-right">
+            <a href="/help">
+                <i class="fas fa-info-circle" style="color:#fcfefd;font-size:26px;"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="content">
+
+        <div class="post">
+            <div class="author">{{ feed.author }}</div>
+            <div class="date">{{ feed.created_at }}</div>
+
+            <h3>
+                <a href="/detail">{{ feed.title }}</a>
+            </h3>
+            <p>{{ feed.text }}</p>
+
+            <div class="info">
+                <a href="#" class="item">
+                    <i class="fas fa-thumbs-up"></i> Like</a>&nbsp;&nbsp;&nbsp;
+                <a href="#" class="item">
+                    <i class="fas fa-comment-alt"></i> Comments {{ feed.comments.count }} </a>
+            </div>
+        </div>
+
+        <!-- 여기서부터 코멘트 -->
+        <style>
+            .comments  {
+                background-color: #f0f1f4;
+                border-bottom: 1px solid #bcbdc3;
+                padding-top: 0.1px;
+            }
+
+            .comment {
+                background-color: #fff;
+                border-radius: 30px;
+                margin: 15px;
+                padding: 15px;
+                margin-bottom: 0;
+            }
+
+            .comment__date {
+                margin: 0 15px;
+                padding: 8px 15px;
+                padding-bottom: 0px;
+                font-size: 13px;
+            }
+
+            .name {
+                font-weight: bold;
+                color: rgb(68, 89, 149);
+            }
+
+            .help {
+                font-size: 13px;
+                color: #555;
+            }
+
+            .form-wrapper {
+                padding: 15px;
+            }
+
+            .form-wrapper input,
+            .form-wrapper textarea {
+                border: 1px solid #ddd;
+                width: 100%;
+                padding: 5px;
+                font-size: 14px;
+                box-sizing: border-box;
+                border-radius: 5px;
+                margin-top: 2px;
+                margin-bottom: 5px;
+            }
+
+            button {
+                border: 1px solid #405ea3;
+                background-color: #4967ad;
+                color: #fff;
+                font-weight: 500;
+                font-size: 15px;
+                padding: 3px 16px;
+                border-radius: 2px;
+            }
+        </style>
+
+        <div class="comments" id="comments">
+            {% for comment in feed.comments.all %}
+            <div class="comment"><span class="name">{{ comment.author }}</span> {{ comment.text }}</div>
+            <div class="comment__date">{{ comment.created_at }} <a href="/comment/{{ comment.pk }}/remove"><i class="far fa-trash-alt"></i></a></div>
+            {% endfor %}
+
+            <div class="form-wrapper">
+                <span class="help">Comments </span>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <input type="text" name="author" placeholder="이름" /><br/>
+                    <input type="password" name="password" placeholder="비밀번호" /><br/>
+                    <textarea name="text" placeholder="코멘트 내용"></textarea>
+                    <button type="submit">등록</button>
+                </form>
+        </div>
+        </div>
+        <!-- 여기까지 코멘트 -->
+
+    </div>
+
+    <div class="tabbar">
+        <div class="tab1">
+            <a href="/">
+                <i class="far fa-list-alt" style="color:#537ff6;font-size:20px;"></i>
+            </a>
+        </div>
+        <div class="tab2">
+            <a href="/warn">
+                <i class="fas fa-user" style="color:#838591;font-size:20px;"></i>
+            </a>
+        </div>
+        <div class="tab3">
+            <a href="/warn">
+                <i class="fas fa-globe" style="color:#838591;font-size:20px;"></i>
+            </a>
+        </div>
+        <div class="tab4">
+            <a href="/warn">
+                <i class="fas fa-th" style="color:#838591;font-size:20px;"></i>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>
